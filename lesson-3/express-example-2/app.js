@@ -10,14 +10,15 @@ const app = express();
 // щоб отримати відповідь просто в адресну строку пишемо localhost:3000/books
 // коли пишемо backend повинні перевірити всі відповіді
 // перевіряємо/тестуємо через POSTMAN
-// правильніше використовувати json метод щоб відправити відповідь, тобто res.json(books), бо send не вміє оброблювати null
+// правильніше використовувати json метод щоб відправити відповідь, тобто res.json(books),
+// бо send не вміє оброблювати null
 
-app.get("/books", (req, res)=> {
-    const databaseResponse = null; //моделюємо ситуацію з відправкою null базою данних
-    // res.json(databaseResponse); //моделюємо ситуацію з відправкою null базою данних
-    // res.send(databaseResponse);
-    res.json(books); //самий правильний варіант відправки відповіді через json
-    // res.send(books); //щоб отримати відповідь просто в адресну строку пишемо localhost:3000/books
-})
+app.get("/books", (req, res) => {
+  const databaseResponse = null; //моделюємо ситуацію з відправкою null базою данних
+  // res.json(databaseResponse); //моделюємо ситуацію з відправкою null базою данних
+  // res.send(databaseResponse);
+  res.json(books); //самий правильний варіант відправки відповіді через json
+  // res.send(books); //щоб отримати відповідь просто в адресну строку пишемо localhost:3000/books
+});
 
 app.listen(3000);
