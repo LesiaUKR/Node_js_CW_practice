@@ -1,7 +1,9 @@
 const express = require("express");
-const moment = require("moment");
+// const moment = require("moment");
+import moment from "moment"; // імпорт з ES6
 const fs = require("fs/promises");
-const cors = require("cors");
+import cors from "cors"; // імпорт з ES6
+// const cors = require("cors"); // імпорт з CommonJS
 
 const books = require("./books");
 
@@ -14,11 +16,10 @@ const app = express();
 // це вирішується встановленням пакуту cors (yarn add cors)
 // імпортуємо cors - це спеціальна функція, яку треба викликати і яка повертає Middleware
 
-// const corsMiddleware = cors(); //викликаємо і отримуємо Middleware, де всередні йде маніпуляція із заголовками, щоб дозволити кросдоменні запити 
+// const corsMiddleware = cors(); //викликаємо і отримуємо Middleware, де всередні йде маніпуляція із заголовками, щоб дозволити кросдоменні запити
 // app.use(corsMiddleware);
 // можна скоротити запис до однієї строки
 app.use(cors());
-
 
 /*
 // Розберемо, коли ж потрібні Middleware
@@ -46,35 +47,39 @@ app.use(cors());
 */
 
 // це розбирали, що таке Middleware
-/*
+
 app.use((req, res, next) => {
-    console.log("First middleware");
-    next();
+  console.log("First middleware");
+  next();
 });
 
-// це розбирали, що таке Middleware
-// app.use((req, res, next)=> {
-//     console.log("Second middleware");
-//     next();
-// })
-*/
+// це Middleware, яка виконується для кожного запиту, який приходить на сервер.
+// Глобально це Middleware, яка виконується для кожного запиту
+// обробник next() - це функція, яка передає управління наступному Middleware,
+// або обробнику запиту, якщо він є. Тобто пошук запиту продовжуєтся навіть після виконання цього глобального Middleware
+// app.use((req, res, next) => {
+//   console.log("Second middleware");
+//   next();
+// });
 
-app.get("/products", async(req, res)=> {
-    res.json([]);
-});
+// app.get("/products", async(req, res)=> {
+//     res.json([]);
+// });
 
 app.get("/books", async (req, res) => {
-    res.json(books);
+  res.json(books);
 });
 
 // це функція для відповіді, коли немає сторінки, яка була в запиті
+// express автоматично шукає запит в файлі зверху вниз
+// якщо не знайшов, то переходить до цього Middleware
 // це ще один приклад використання Middleware
 // відпровідь приходить у форматі json
 
-app.use((req, res)=> {
-    res.status(404).json({
-        message: "Not found"
-    })
-})
+// app.use((req, res) => {
+//   res.status(404).json({
+//     message: "Not found",
+//   });
+// });
 
 app.listen(3000); //запускаємо веб-сервер
